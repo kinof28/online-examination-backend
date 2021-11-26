@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +18,10 @@ public class Exam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-//	private Option option;
+	@ManyToOne
+	private Option option;
 	private Date startDate;
 	private Date endDate;
-//	private Teacher teacher;
+	@ManyToOne
+	private Teacher teacher;
 }

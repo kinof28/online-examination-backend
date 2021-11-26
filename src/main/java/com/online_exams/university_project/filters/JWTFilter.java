@@ -16,7 +16,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.online_exams.university_project.services.AdminDetailsServiceImp;
 import com.online_exams.university_project.services.StudentDetailsServiceImp;
-import com.online_exams.university_project.services.TeacherDetailsServiceImp;
 import com.online_exams.university_project.utilities.JWTUtility;
 
 import lombok.AllArgsConstructor;

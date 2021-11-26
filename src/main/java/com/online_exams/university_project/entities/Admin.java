@@ -10,7 +10,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.online_exams.university_project.base_entities.BaseUser;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@SuppressWarnings("serial")
+@AllArgsConstructor
+@Setter
+@Getter
 public class Admin extends BaseUser{
 
 	@Override

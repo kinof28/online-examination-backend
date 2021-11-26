@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 
 import com.online_exams.university_project.base_entities.BaseEntity;
 import com.online_exams.university_project.enums.DegreeType;
@@ -18,5 +19,6 @@ import lombok.Setter;
 public class Degree extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	private DegreeType type;
-//	private List<Option> options;
+	@OneToMany
+	private List<Option> options;
 }

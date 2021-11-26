@@ -15,6 +15,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @MappedSuperclass
+@SuppressWarnings("serial")
 public abstract class BaseUser implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
