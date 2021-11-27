@@ -2,12 +2,9 @@ package com.online_exams.university_project.entities;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

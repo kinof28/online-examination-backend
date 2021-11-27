@@ -33,8 +33,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     AdminDetailsServiceImp adminDetailsService;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(this.adminDetailsService);
-//        auth.userDetailsService(this.userDetailsService);
+        auth.userDetailsService(this.adminDetailsService);
+        auth.userDetailsService(this.studentDetailsService);
+        auth.userDetailsService(this.teacherDetailsService);
 
     }
 
@@ -46,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 //                .antMatchers("/api/v0/admin/**").hasRole("admin")
                 .anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
