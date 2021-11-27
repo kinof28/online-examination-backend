@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,11 @@ import com.online_exams.university_project.entities.Admin;
 import com.online_exams.university_project.entities.HelpMessage;
 import com.online_exams.university_project.exceptions.WrongPasswordException;
 import com.online_exams.university_project.requests.AdminUpdateRequest;
+import com.online_exams.university_project.requests.DegreeCreationRequest;
+import com.online_exams.university_project.requests.DepartmentCreationRequest;
+import com.online_exams.university_project.requests.FacultyCreationRequest;
+import com.online_exams.university_project.requests.OptionCreationRequest;
+import com.online_exams.university_project.requests.SpecialityCreationRequest;
 import com.online_exams.university_project.services.AdminServices;
 import com.online_exams.university_project.services.ExamServices;
 import com.online_exams.university_project.services.HelpService;
@@ -70,7 +76,7 @@ public class AdminController {
 		else return"\"error\"";
 		
 	}
-	@PostMapping("/profil/update")
+	@PutMapping("/profil/update")
 	private String updateProfilInfo(@RequestBody AdminUpdateRequest request,@AuthenticationPrincipal Admin admin) {
 		try {
 			if(this.service.updateData(request, admin)) {
@@ -102,21 +108,36 @@ public class AdminController {
 		if(this.examServices.deleteExam(id))return "\"deleted\"";
 		else return "\"bad id request\"";
 	}
-
-	private String createFaculty() {
-		return "";
+	@PostMapping("/create/faculty")
+	private String createFaculty(@RequestBody FacultyCreationRequest request) {
+		if(this.service.createFaculty(request)) {
+			return "\"created\"";
+		}else return "\"echeck\"";
 	}
-	private String createDepartment() {
-		return "";
+	@PostMapping("/create/department")
+	private String createDepartment(@RequestBody DepartmentCreationRequest request) {
+		if(this.service.createDepartment(request)) {
+			return "\"created\"";
+		}else return "\"echeck\"";
 	}
-	private String createDegree() {
-		return "";
+	@PostMapping("/create/degree")
+	private String createDegree(@RequestBody DegreeCreationRequest request) {
+		if(this.service.createDegree(request)) {
+			return "\"created\"";
+		}else return "\"echeck\"";
 	}
-	private String createOption() {
-		return "";
+	@PostMapping("/create/speciality")
+	private String createSpeciality(@RequestBody SpecialityCreationRequest request) {
+		if(this.service.createSpeciality(request)) {
+			return "\"created\"";
+		}else return "\"echeck\"";
 	}
-	private String createSpeciality() {
-		return "";
+	@PostMapping("/create/option")
+	private String createOption(@RequestBody OptionCreationRequest request) {
+		if(this.service.createOption(request)) {
+			return "\"created\"";
+		}else return "\"echeck\"";
 	}
+	
 	
 }

@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.online_exams.university_project.entities.Department;
 @Repository
-public interface DepartementRepository extends JpaRepository<Department, Long>{
+public interface DepartmentRepository extends JpaRepository<Department, Long>{
 
 }
