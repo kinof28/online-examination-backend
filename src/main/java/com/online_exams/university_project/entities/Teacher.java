@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -24,8 +26,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Teacher extends BaseClient{
-	@OneToMany
-	private Optional<Department> secondDepartment;
+	@ManyToOne
+	private Department secondDepartment;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

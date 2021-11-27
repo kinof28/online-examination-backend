@@ -20,7 +20,7 @@ public class TeacherMapper implements Mapper<Teacher, TeacherDTO>{
 				teacher.getAddress(),
 				teacher.getPhoneNumber(),
 				teacher.getDepartment().getName(),
-				teacher.getSecondDepartment().isPresent()?teacher.getSecondDepartment().get().getName():"");
+				teacher.getSecondDepartment() != null?teacher.getSecondDepartment().getName():"");
 	}
 
 	@Override

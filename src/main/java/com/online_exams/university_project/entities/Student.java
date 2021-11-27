@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Student extends BaseClient{
-	@OneToMany
+	@ManyToOne
 	private Degree degree;
 	@ManyToMany
 	private List<Option> activeOptions;

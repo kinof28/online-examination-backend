@@ -13,6 +13,9 @@ import com.online_exams.university_project.entities.Admin;
 import com.online_exams.university_project.entities.Degree;
 import com.online_exams.university_project.entities.Department;
 import com.online_exams.university_project.entities.Faculty;
+import com.online_exams.university_project.entities.Option;
+import com.online_exams.university_project.entities.Speciality;
+import com.online_exams.university_project.enums.DegreeType;
 import com.online_exams.university_project.exceptions.WrongPasswordException;
 import com.online_exams.university_project.repositories.AdminRepository;
 import com.online_exams.university_project.repositories.DegreeRepository;
@@ -105,16 +108,55 @@ public class AdminServices {
 		}
 	}
 	public boolean createDegree(DegreeCreationRequest request) {
-		
-		return false;
+		try {
+			Department department = this.departmentRepository.getById(request.getDepartmentId());
+			Degree degree = new Degree();
+			degree.setName(request.getName());
+			degree.setDescription(request.getDescription());
+			degree.setType(DegreeType.valueOf(request.getDegreeType()));
+			degree.setOptions(new LinkedList<>());
+			this.degreeRepository.save(degree);
+			department.getDegrees().add(degree);
+			this.departmentRepository.save(department);
+			return true;
+		}catch(Exception e) {
+			System.out.println("something went wrong in creation of degree in departement with id :"+request.getDepartmentId()
+			+"and here is error message"+e.getMessage());
+			return false;
+		}
 	}
 	public boolean createSpeciality(SpecialityCreationRequest request) {
-		
-		return false;
+		Speciality speciality = new Speciality();
+		speciality.setName(request.getName());
+		speciality.setDescription(request.getDescription());
+		try {
+			speciality.setDepartement(this.departmentRepository.getById(request.getDepartmentId()));
+			this.specialityRepository.save(speciality);
+			return true;
+		}catch(Exception e) {
+			System.out.println("something went wrong in creation of speciality with name :"+request.getName()
+			+"and here is error message"+e.getMessage());
+			return false;
+		}
 	}
 	public boolean createOption(OptionCreationRequest request) {
-		
-		return false;
+		try {
+			Degree degree = this.degreeRepository.getById(request.getDegreeID());
+			Option option = new Option();
+			option.setName(request.getName());
+			option.setDescription(request.getDescription());
+			option.setSpeciality(this.specialityRepository.getById(request.getSpecialityID()));
+			this.optionRepository.save(option);
+			degree.getOptions().add(option);
+			this.degreeRepository.save(degree);
+			return true;
+			
+		}catch(Exception e) {
+			System.out.println("something went wrong in creation of Option in degree with id :"+request.getDegreeID()
+			+"and speciality with id :"+request.getSpecialityID()
+			+"and here is error message"+e.getMessage());
+			return false;
+		}
 	}
 	public boolean updateFaculty(OptionCreationRequest request) {
 		
