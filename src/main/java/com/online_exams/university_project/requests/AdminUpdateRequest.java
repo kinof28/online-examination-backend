@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 public class AdminUpdateRequest {
 	private String oldPassword;
-	private String email;
 	private String newPassword;
 	private String firstName;
 	private String lastName;

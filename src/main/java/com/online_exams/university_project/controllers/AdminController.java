@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.online_exams.university_project.dtos.AdminDTO;
 import com.online_exams.university_project.dtos.ExamDTO;
 import com.online_exams.university_project.dtos.StudentDTO;
 import com.online_exams.university_project.dtos.TeacherDTO;
@@ -46,6 +47,10 @@ public class AdminController {
 	@GetMapping("/")
 	private String test() {
 		return "hello world From Admin Controller !";
+	}
+	@GetMapping("/current")
+	private AdminDTO getCurrent(@AuthenticationPrincipal Admin admin) {
+		return this.service.getCurrent(admin);
 	}
 	@GetMapping("/help-messages")
 	private List<HelpMessage> getAllHelpMessages(){
