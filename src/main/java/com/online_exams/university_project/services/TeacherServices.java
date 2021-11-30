@@ -12,7 +12,10 @@ import com.online_exams.university_project.entities.TeacherConfirmationToken;
 import com.online_exams.university_project.mappers.TeacherMapper;
 import com.online_exams.university_project.repositories.TeacherRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class TeacherServices {
 	
 	private TeacherRepository repository;
@@ -26,12 +29,16 @@ public class TeacherServices {
 		return "";
 	}
 	public List<TeacherDTO> getAllTeachers(){
-		return this.mapper.getAllDTOs(this.repository.findAll());
+
+		return this.mapper.getAllDTOs(this.repository.findAllByIsActivatedIsTrueAndIsLockedIsFalse());
+
 	}
 	public boolean deleteTeacher(long id) {
 		Optional<Teacher> teacherO=this.repository.findById(id);
 		if(teacherO.isPresent()) {
-			this.repository.delete(teacherO.get());
+			Teacher teacher =teacherO.get();
+			teacher.setLocked(true);
+			this.repository.save(teacher);
 			return true;
 		}else return false;
 	}

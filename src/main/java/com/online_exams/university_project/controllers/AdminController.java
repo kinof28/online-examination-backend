@@ -64,7 +64,7 @@ public class AdminController {
 	private List<StudentDTO> getAllStudents(){
 		return this.studentService.getAllStudents();
 	}
-	@GetMapping("teachers")
+	@GetMapping("/teachers")
 	private List<TeacherDTO> getAllTeachers(){
 		
 		return this.teacherServices.getAllTeachers();

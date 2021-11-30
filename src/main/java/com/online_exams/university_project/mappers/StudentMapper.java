@@ -19,6 +19,7 @@ public class StudentMapper implements Mapper<Student, StudentDTO> {
 			activeOptions.add(o.getName());
 		}
 		return new StudentDTO(
+				student.getId(),
 				student.getEmail(),
 				student.getFirstName(),
 				student.getLastName(),

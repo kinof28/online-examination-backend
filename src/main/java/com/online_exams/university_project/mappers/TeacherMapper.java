@@ -14,6 +14,7 @@ public class TeacherMapper implements Mapper<Teacher, TeacherDTO>{
 	@Override
 	public TeacherDTO getOneDTO(Teacher teacher) {
 		return new TeacherDTO(
+				teacher.getId(),
 				teacher.getEmail(),
 				teacher.getFirstName(),
 				teacher.getLastName(),

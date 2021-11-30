@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class TeacherDTO {
+	private long id;
 	private String email;
 	private String firstName;
 	private String lastName;

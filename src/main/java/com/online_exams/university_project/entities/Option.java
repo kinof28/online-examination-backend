@@ -19,4 +19,10 @@ public class Option extends BaseEntity{
 	private Level level;
 	@ManyToOne
 	private Speciality speciality;
+	@Override
+	public String toString() {
+		return "level:" + level + ", speciality :" + speciality.getName() + ", name:" + getName()
+				+ ", Description:" + getDescription();
+	}
+	
 }

@@ -1,6 +1,7 @@
 package com.online_exams.university_project.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -25,8 +26,8 @@ public class HelpService {
 	}
 	public HelpMessage getMessage(long id){
 		try {
-			return this.helpRepository.getById(id);
-		}catch(EntityNotFoundException e) {
+			return this.helpRepository.findById(id).get();
+		}catch(NoSuchElementException e) {
 			return null;
 		}
 		

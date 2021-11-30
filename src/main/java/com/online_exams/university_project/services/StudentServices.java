@@ -28,12 +28,14 @@ public class StudentServices {
 		return "";
 	}
 	public List<StudentDTO> getAllStudents(){
-		return this.mapper.getAllDTOs(this.repository.findAll());
+		return this.mapper.getAllDTOs(this.repository.findAllByIsActivatedIsTrueAndIsLockedIsFalse());
 	}
 	public boolean deleteStudent(long id) {
 		Optional<Student> studentO=this.repository.findById(id);
 		if(studentO.isPresent()) {
-			this.repository.delete(studentO.get());
+			Student student=studentO.get();
+			student.setLocked(true);
+			this.repository.save(student);
 			return true;
 		}else return false;
 	}
