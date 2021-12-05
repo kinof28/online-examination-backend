@@ -1,6 +1,7 @@
 package com.online_exams.university_project.services;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,6 +17,7 @@ import com.online_exams.university_project.entities.Faculty;
 import com.online_exams.university_project.entities.Option;
 import com.online_exams.university_project.entities.Speciality;
 import com.online_exams.university_project.enums.DegreeType;
+import com.online_exams.university_project.enums.Level;
 import com.online_exams.university_project.exceptions.WrongPasswordException;
 import com.online_exams.university_project.mappers.AdminMapper;
 import com.online_exams.university_project.repositories.AdminRepository;
@@ -83,6 +85,19 @@ public class AdminServices {
 			return false;
 		}
 	}
+	
+	public List<Faculty> getAllFaculties(){
+		return this.facultyRepository.findAll();
+	}
+	public List<Speciality> getAllSpecialities(long departmentID){
+		Optional<Department> departmentO=this.departmentRepository.findById(departmentID);
+		if(departmentO.isPresent())	return this.specialityRepository.findByDepartement(departmentO.get());
+		else return null;
+	}
+	public Speciality getSpeciality(long specialityId) {
+		Optional<Speciality> specialityO=this.specialityRepository.findById(specialityId);
+		return specialityO.isPresent()?specialityO.get():null;
+	}
 
 	public boolean createFaculty(FacultyCreationRequest request) {
 		Faculty faculty = new Faculty();
@@ -115,12 +130,12 @@ public class AdminServices {
 					return true;
 				} catch (Exception e) {
 					System.out.println("problem occured durinh update of faculty to add department"
-							+ "and here is error message" + e.getMessage());
+							+ " and here is error message" + e.getMessage());
 					return false;
 				}
 			} catch (Exception e) {
 				System.out.println("problem occured during creation of department with name " + request.getName()
-						+ "and here is error message" + e.getMessage());
+						+ " and here is error message " + e.getMessage());
 				return false;
 			}
 
@@ -150,18 +165,18 @@ public class AdminServices {
 		}
 	}
 
-	public boolean createSpeciality(SpecialityCreationRequest request) {
+	public long createSpeciality(SpecialityCreationRequest request) {
 		Speciality speciality = new Speciality();
 		speciality.setName(request.getName());
 		speciality.setDescription(request.getDescription());
 		try {
 			speciality.setDepartement(this.departmentRepository.getById(request.getDepartmentId()));
-			this.specialityRepository.save(speciality);
-			return true;
+			return this.specialityRepository.save(speciality).getId();
+			
 		} catch (Exception e) {
 			System.out.println("something went wrong in creation of speciality with name :" + request.getName()
 					+ "and here is error message" + e.getMessage());
-			return false;
+			return 0l;
 		}
 	}
 
@@ -172,6 +187,7 @@ public class AdminServices {
 			option.setName(request.getName());
 			option.setDescription(request.getDescription());
 			option.setSpeciality(this.specialityRepository.getById(request.getSpecialityID()));
+			option.setLevel(Level.valueOf(request.getLevel()));
 			this.optionRepository.save(option);
 			degree.getOptions().add(option);
 			this.degreeRepository.save(degree);

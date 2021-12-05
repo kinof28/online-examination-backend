@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.online_exams.university_project.base_entities.BaseEntity;
 
 import lombok.Getter;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Department extends BaseEntity {
-//	private Faculty faculty;
+	@JsonProperty("children")
 	@OneToMany
 	private List<Degree> degrees;
 }

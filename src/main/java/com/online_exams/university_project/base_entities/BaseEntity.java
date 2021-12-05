@@ -16,7 +16,7 @@ public abstract class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@Column(nullable = false,unique = true)
+	@Column(nullable = false)
 	private String name;
 	@Column(columnDefinition = "TEXT")
 	private String description;

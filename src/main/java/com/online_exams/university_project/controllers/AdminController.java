@@ -18,7 +18,9 @@ import com.online_exams.university_project.dtos.ExamDTO;
 import com.online_exams.university_project.dtos.StudentDTO;
 import com.online_exams.university_project.dtos.TeacherDTO;
 import com.online_exams.university_project.entities.Admin;
+import com.online_exams.university_project.entities.Faculty;
 import com.online_exams.university_project.entities.HelpMessage;
+import com.online_exams.university_project.entities.Speciality;
 import com.online_exams.university_project.exceptions.WrongPasswordException;
 import com.online_exams.university_project.requests.AdminUpdateRequest;
 import com.online_exams.university_project.requests.DegreeCreationRequest;
@@ -72,6 +74,18 @@ public class AdminController {
 	@GetMapping("/exams")
 	private List<ExamDTO> getAllExams(){
 		return this.examServices.getAllExams();
+	}
+	@GetMapping("/branches")
+	private List<Faculty> getAllBranches(){
+		return this.service.getAllFaculties();
+	}
+	@GetMapping("/specialities/{departmentID}")
+	private List<Speciality> getAllSpecialities(@PathVariable long departmentID){
+		return this.service.getAllSpecialities(departmentID);
+	}
+	@GetMapping("/speciality/{specialityID}")
+	private Speciality getSpeciality(@PathVariable long specialityID){
+		return this.service.getSpeciality(specialityID);
 	}
 	@PostMapping("/help-message/reply/{messageId}")
 	private String replyToHelpMessage(@PathVariable long messageId,@RequestBody String context) {
@@ -133,8 +147,9 @@ public class AdminController {
 	}
 	@PostMapping("/create/speciality")
 	private String createSpeciality(@RequestBody SpecialityCreationRequest request) {
-		if(this.service.createSpeciality(request)) {
-			return "\"created\"";
+		long id=this.service.createSpeciality(request);
+		if(id!=0) {
+			return "\"created"+id+"\"";
 		}else return "\"echeck\"";
 	}
 	@PostMapping("/create/option")

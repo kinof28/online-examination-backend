@@ -1,5 +1,7 @@
 package com.online_exams.university_project.requests;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +11,7 @@ public class OptionCreationRequest extends BaseCreationRequest {
 	
 	
 	private String level;
+	@JsonProperty("SuperId")
 	private long degreeID;
 	private long specialityID;
 
