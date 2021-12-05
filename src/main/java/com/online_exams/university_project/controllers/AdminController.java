@@ -28,6 +28,7 @@ import com.online_exams.university_project.requests.DepartmentCreationRequest;
 import com.online_exams.university_project.requests.FacultyCreationRequest;
 import com.online_exams.university_project.requests.OptionCreationRequest;
 import com.online_exams.university_project.requests.SpecialityCreationRequest;
+import com.online_exams.university_project.requests.UpdateBranchRequest;
 import com.online_exams.university_project.services.AdminServices;
 import com.online_exams.university_project.services.ExamServices;
 import com.online_exams.university_project.services.HelpService;
@@ -156,6 +157,66 @@ public class AdminController {
 	private String createOption(@RequestBody OptionCreationRequest request) {
 		if(this.service.createOption(request)) {
 			return "\"created\"";
+		}else return "\"echeck\"";
+	}
+	@PutMapping("/update/faculty")
+	private String updateFaculty(@RequestBody UpdateBranchRequest request) {
+		if(this.service.updateFaculty(request)) {
+			return "\"updated\"";
+		}else return "\"echeck\"";
+	}
+	@PutMapping("/update/department")
+	private String updateDepartment(@RequestBody UpdateBranchRequest request) {
+		if(this.service.updateDepartment(request)) {
+			return "\"updated\"";
+		}else return "\"echeck\"";
+	}
+	@PutMapping("/update/degree")
+	private String updateDegree(@RequestBody UpdateBranchRequest request) {
+		if(this.service.updateDegree(request)) {
+			return "\"updated\"";
+		}else return "\"echeck\"";
+	}
+	@PutMapping("/update/option")
+	private String updateOption(@RequestBody UpdateBranchRequest request) {
+		if(this.service.updateOption(request)) {
+			return "\"updated\"";
+		}else return "\"echeck\"";
+	}
+	@PutMapping("/update/speciality")
+	private String updateSpeciality(@RequestBody UpdateBranchRequest request) {
+		if(this.service.updateSpeciality(request)) {
+			return "\"updated\"";
+		}else return "\"echeck\"";
+	}
+	@DeleteMapping("/delete/faculty/{id}")
+	private String deleteFaculty(@PathVariable long id) {
+		if(this.service.deleteFaculty(id)) {
+			return "\"deleted\"";
+		}else return "\"echeck\"";
+	}
+	@DeleteMapping("/delete/department/{id}/{facultyID}")
+	private String deleteDepartment(@PathVariable long id,@PathVariable long facultyID) {
+		if(this.service.deleteDepartment(id,facultyID)) {
+			return "\"deleted\"";
+		}else return "\"echeck\"";
+	}
+	@DeleteMapping("/delete/degree/{id}/{departmentID}")
+	private String deleteDegree(@PathVariable long id,@PathVariable long departmentID) {
+		if(this.service.deleteDegree(id,departmentID)) {
+			return "\"deleted\"";
+		}else return "\"echeck\"";
+	}
+	@DeleteMapping("/delete/option/{id}/{degreeID}")
+	private String deleteOption(@PathVariable long id,@PathVariable long degreeID) {
+		if(this.service.deleteOption(id,degreeID)) {
+			return "\"deleted\"";
+		}else return "\"echeck\"";
+	}
+	@DeleteMapping("/delete/speciality/{id}/{departmentID}")
+	private String deleteSpeciality(@PathVariable long id,@PathVariable long departmentID) {
+		if(this.service.deleteSpeciality(id)) {
+			return "\"deleted\"";
 		}else return "\"echeck\"";
 	}
 	

@@ -32,6 +32,7 @@ import com.online_exams.university_project.requests.DepartmentCreationRequest;
 import com.online_exams.university_project.requests.FacultyCreationRequest;
 import com.online_exams.university_project.requests.OptionCreationRequest;
 import com.online_exams.university_project.requests.SpecialityCreationRequest;
+import com.online_exams.university_project.requests.UpdateBranchRequest;
 
 import lombok.AllArgsConstructor;
 
@@ -201,54 +202,128 @@ public class AdminServices {
 		}
 	}
 
-	public boolean updateFaculty(OptionCreationRequest request) {
-
-		return false;
+	public boolean updateFaculty(UpdateBranchRequest request) {
+		Optional<Faculty> facultyO=this.facultyRepository.findById(request.getId());
+		if(facultyO.isPresent()) {
+			Faculty faculty = facultyO.get();
+			if(request.getName()!=null&&!request.getName().isBlank())faculty.setName(request.getName());
+			if(request.getDescription()!=null&&!request.getDescription().isBlank())faculty.setDescription(request.getDescription());
+			this.facultyRepository.save(faculty);
+			return true;
+		}else return false;
 	}
 
-	public boolean updateDepartment(OptionCreationRequest request) {
-
-		return false;
+	public boolean updateDepartment(UpdateBranchRequest request) {
+		
+		Optional<Department> departmentO=this.departmentRepository.findById(request.getId());
+		if(departmentO.isPresent()) {
+			Department department = departmentO.get();
+			if(request.getName()!=null&&!request.getName().isBlank())department.setName(request.getName());
+			if(request.getDescription()!=null&&!request.getDescription().isBlank())department.setDescription(request.getDescription());
+			this.departmentRepository.save(department);
+			return true;
+		}else return false;
 	}
 
-	public boolean updateDegree(OptionCreationRequest request) {
-
-		return false;
+	public boolean updateDegree(UpdateBranchRequest request) {
+		Optional<Degree> degreeO=this.degreeRepository.findById(request.getId());
+		if(degreeO.isPresent()) {
+			Degree degree = degreeO.get();
+			if(request.getName()!=null&&!request.getName().isBlank())degree.setName(request.getName());
+			if(request.getDescription()!=null&&!request.getDescription().isBlank())degree.setDescription(request.getDescription());
+			this.degreeRepository.save(degree);
+			return true;
+		}else return false;
 	}
 
-	public boolean updateSpeciality(OptionCreationRequest request) {
-
-		return false;
+	public boolean updateSpeciality(UpdateBranchRequest request) {
+		Optional<Speciality> specialityO=this.specialityRepository.findById(request.getId());
+		if(specialityO.isPresent()) {
+			Speciality speciality= specialityO.get();
+			if(request.getName()!=null&&!request.getName().isBlank())speciality.setName(request.getName());
+			if(request.getDescription()!=null&&!request.getDescription().isBlank())speciality.setDescription(request.getDescription());
+			this.specialityRepository.save(speciality);
+			return true;
+		}else return false;
 	}
 
-	public boolean updateOption(OptionCreationRequest request) {
-
-		return false;
+	public boolean updateOption(UpdateBranchRequest request) {
+		Optional<Option> optionO=this.optionRepository.findById(request.getId());
+		if(optionO.isPresent()) {
+			Option option = optionO.get();
+			if(request.getName()!=null&&!request.getName().isBlank())option.setName(request.getName());
+			if(request.getDescription()!=null&&!request.getDescription().isBlank())option.setDescription(request.getDescription());
+			this.optionRepository.save(option);
+			return true;
+		}else return false;
 	}
 
-	public boolean deleteFaculty(OptionCreationRequest request) {
-
-		return false;
+	public boolean deleteFaculty(Long id) {
+		try {
+			this.facultyRepository.deleteById(id);
+			return true;
+		}catch(Exception e) {
+			return false;			
+		}
 	}
 
-	public boolean deleteDepartment(OptionCreationRequest request) {
-
-		return false;
+	public boolean deleteDepartment(Long id,Long facultyID) {
+		try {
+			Optional<Faculty> facultyO=this.facultyRepository.findById(facultyID);
+			Optional<Department> department0=this.departmentRepository.findById(id);
+			if(facultyO.isPresent()&&department0.isPresent()) {
+				Faculty faculty =facultyO.get();
+				faculty.getDepartments().remove(department0.get());
+				this.facultyRepository.save(faculty);
+				this.departmentRepository.delete(department0.get());
+				return true;
+				
+			}else return false;
+		}catch(Exception e) {
+			return false;			
+		}
 	}
 
-	public boolean deleteDegree(OptionCreationRequest request) {
-
-		return false;
+	public boolean deleteDegree(Long id,Long departmentID) {
+		try {
+			Optional<Department> department0=this.departmentRepository.findById(departmentID);
+			Optional<Degree> degreeO=this.degreeRepository.findById(id);
+			if(department0.isPresent()&&degreeO.isPresent()) {
+				Department department=department0.get();
+				department.getDegrees().remove(degreeO.get());
+				this.departmentRepository.save(department);
+				this.degreeRepository.delete(degreeO.get());;
+				return true;
+				
+			}else return false;
+		}catch(Exception e) {
+			return false;			
+		}
 	}
 
-	public boolean deleteSpeciality(OptionCreationRequest request) {
-
-		return false;
+	public boolean deleteSpeciality(Long id) {
+		try {
+			this.specialityRepository.deleteById(id);
+			return true;
+		}catch(Exception e) {
+			return false;			
+		}
 	}
 
-	public boolean deleteOption(OptionCreationRequest request) {
-
-		return false;
+	public boolean deleteOption(Long id,Long degreeID) {
+		try {
+			Optional<Degree> degreeO=this.degreeRepository.findById(degreeID);
+			Optional<Option> optionO=this.optionRepository.findById(id);
+			if(degreeO.isPresent()&&optionO.isPresent()) {
+				Degree degree = degreeO.get();
+				degree.getOptions().remove(optionO.get());
+				this.degreeRepository.save(degree);
+				this.optionRepository.delete(optionO.get());;
+				return true;
+			}else return false;
+		}catch(Exception e) {
+			return false;			
+		}
 	}
 
 }
